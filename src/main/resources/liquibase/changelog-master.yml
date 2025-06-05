@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-users-table
+      author: SmthInUrEye
+      changes:
+
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: telegram_id
+                  type: BIGINT
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: registered_at
+                  type: TIMESTAMP
+
+        - createTable:
+            tableName: notification_task
+            columns:
+              - column:
+                  name: notification_id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: telegram_id
+                  type: BIGINT
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: DATE_TIME
+                  type: TIMESTAMP
+
+  - changeSet:
+      id: 2-edit-notification-table
+      author: SmthInUrEye
+      changes:
+
+        - dropUniqueConstraint:
+            tableName: notification_task
+            constraintName: notification_task_telegram_id_key
+
+        - addColumn:
+            tableName: notification_task
+            columns:
+              - column:
+                  name: text
+                  type: VARCHAR(1024)
+                  constraints:
+                    nullable: false
